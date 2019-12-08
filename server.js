@@ -1,10 +1,15 @@
 const express = require('express')
 const http = require('http')
 const socket = require('socket.io')
+const createTables = require('./server/create-tables')
+const manageSocketing = require('./server/manage-socketing')
+const mockActivity = require('./server/mockActivity')
 
 const app = express()
 const server = http.createServer(app)
 const io = socket.listen(server)
+
+const tables = createTables(15)
 
 app.use(express.static(__dirname))
 
@@ -15,12 +20,8 @@ server.listen(port, () =>
 )
 
 //Socketing
-io.on('connection', function(socket){
-    console.log("A new user connected")
-
-    socket.emit('message', {'message': 'hello worldddddddddd'})
-
-    socket.on('message', function(data) {
-        console.log("A message was received from client")
-    })
+io.on('connection', socket => {
+	console.log("A new user connected")
+  manageSocketing(socket, tables)
+	mockActivity(socket, tables)
 })

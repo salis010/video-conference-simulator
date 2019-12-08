@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from '@emotion/styled'
 import { JoinButton } from '../join-button/index'
 import { Participant } from './participant'
+//import camera from './camera.png'
 
 const tableSize = 250
 const circleTableSize = 110
@@ -38,6 +39,9 @@ const TableTitle = styled.div`
 `
 
 const CircleTable = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   width: ${circleTableSize + 'px'};
   height: ${circleTableSize + 'px'};
@@ -45,6 +49,9 @@ const CircleTable = styled.div`
   top: ${((tableSize - circleTableSize) / 2) + 'px'};
   background-color: RGB(180, 180, 180);
   border-radius: 9999px;
+  background-image: ${props => props.isBroadcasting ? "url('./components/tables/camera.png')" : 'none'};
+  background-repeat: no-repeat;
+  background-position: center;
   z-index: 1;
 `
 
@@ -56,19 +63,33 @@ const ButtonWrapper = styled.div`
   bottom: 15px;
 `
 
-export const Tables = (props) =>
-  <Wrapper>
-    {props.tables.map(table =>
-      <Table key={table.id} backgroundColor={table.backgroundColor}>
-        <TitleWrapper>
-          <TableTitle>{table.name}</TableTitle>
-        </TitleWrapper>
-        <CircleTable />
-        {table.participants.map((participant, index) =>
-          <Participant key={index} position={index} name={participant} tableSize={tableSize} circleTableSize={circleTableSize}/>)}
-        <ButtonWrapper>
-          <JoinButton id={table.id} joined={table.joined}/>
-        </ButtonWrapper>
-      </Table>
-    )}
-  </Wrapper>
+export class Tables extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidMount() {
+    this.props.onGetTables()
+    this.props.socket.on('mocked-activity', data => this.props.onUpdateTables(data))
+  }
+
+  render() {
+    return (
+      <Wrapper>
+        {this.props.tables.map(table =>
+          <Table key={table.id} backgroundColor={table.backgroundColor}>
+            <TitleWrapper>
+              <TableTitle>{table.name}</TableTitle>
+            </TitleWrapper>
+            <CircleTable isBroadcasting={this.props.tables[table.id].isBroadcasting}/>
+            {table.participants.map((participant, index) =>
+              <Participant key={index} position={index} name={participant} tableSize={tableSize} circleTableSize={circleTableSize}/>)}
+            <ButtonWrapper>
+              <JoinButton id={table.id} joined={table.joined}/>
+            </ButtonWrapper>
+          </Table>
+        )}
+      </Wrapper>
+    )
+  }
+}
