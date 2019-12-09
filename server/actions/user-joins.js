@@ -6,7 +6,12 @@ const userJoins = tables => {
 
   if(tables[id].participants.length < 4) {
     const name = names[getRandomInt(names.length)]
-    tables[id].participants.push(name)
+    const participant = {
+      name: name,
+      hasWebcamIssue: false,
+      hasConnectionIssue: false,
+    }
+    tables[id].participants.push(participant)
     return tables
   }
 

@@ -3,16 +3,20 @@ const userJoins = require('./actions/user-joins')
 const userLeaves = require('./actions/user-leaves')
 const broadcastStarts = require('./actions/broadcast-starts')
 const broadcastEnds = require('./actions/broadcast-ends')
-// const userHasConnectionIssue = require('./actions/user-has-connection-issue')
-// const userHasWebcamIssue = require('./actions/user-has-webcam-issue')
+const userHasConnectionIssue = require('./actions/user-has-connection-issue')
+const userHasWebcamIssue = require('./actions/user-has-webcam-issue')
+const userSolvedConnectionIssue = require('./actions/user-solved-connection-issue')
+const userSolvedWebcamIssue = require('./actions/user-solved-webcam-issue')
 
 const actions = [
   tables => userJoins(tables),
-  //tables => userLeaves(tables),
+  tables => userLeaves(tables),
   tables => broadcastStarts(tables),
   tables => broadcastEnds(tables),
-  // (tables) => userHasConnectionIssue(tables),
-  // (tables) => userHasWebcamIssue(tables),
+  tables => userHasConnectionIssue(tables),
+  tables => userHasWebcamIssue(tables),
+  tables => userSolvedConnectionIssue(tables),
+  tables => userSolvedWebcamIssue(tables),
 ]
 
 const mockActivity = (socket, tables) => {
@@ -20,7 +24,7 @@ const mockActivity = (socket, tables) => {
     {
       const fn = actions[getRandomInt(actions.length)]
       const newTables = fn(tables)
-      //console.log(newTables)
+      
       socket.emit('mocked-activity', newTables)
     },
     200)

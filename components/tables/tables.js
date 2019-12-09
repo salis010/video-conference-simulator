@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import styled from '@emotion/styled'
 import { JoinButton } from '../join-button/index'
 import { Participant } from './participant'
-//import camera from './camera.png'
 
 const tableSize = 250
 const circleTableSize = 110
@@ -18,6 +17,7 @@ const Table = styled.div`
   height: ${tableSize + 'px'};
   margin: 40px;
   background-color: ${props => props.backgroundColor};
+  border: ${props => props.joined ? "3px solid RGB(100, 100, 150)" : "none"};
   border-radius: 4px;
 `
 
@@ -77,13 +77,22 @@ export class Tables extends React.Component {
     return (
       <Wrapper>
         {this.props.tables.map(table =>
-          <Table key={table.id} backgroundColor={table.backgroundColor}>
+          <Table
+            key={table.id}
+            backgroundColor={table.backgroundColor}
+            joined={table.joined}
+          >
             <TitleWrapper>
               <TableTitle>{table.name}</TableTitle>
             </TitleWrapper>
             <CircleTable isBroadcasting={this.props.tables[table.id].isBroadcasting}/>
             {table.participants.map((participant, index) =>
-              <Participant key={index} position={index} name={participant} tableSize={tableSize} circleTableSize={circleTableSize}/>)}
+              <Participant
+                key={index}
+                position={index}
+                participant={participant}
+                tableSize={tableSize}
+                circleTableSize={circleTableSize}/>)}
             <ButtonWrapper>
               <JoinButton id={table.id} joined={table.joined}/>
             </ButtonWrapper>

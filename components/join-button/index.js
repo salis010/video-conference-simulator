@@ -20,18 +20,21 @@ const mapDispatchToProps = dispatch =>
       onClick: (socket, id, join) => {
         socket.emit(
           'join',
-          {'id': id, 'join': join, 'participant': 'Me'},
+          {
+            'id': id,
+            'join': join,
+            'participant': {
+                'name': 'Me',
+                'hasWebcamIssue': false,
+                'hasConnectionIssue': false
+              }
+            },
           (data) => [
-            console.log(data),
             dispatch(updateTables(data)),
             dispatch(joinTable(join)),
             //dispatch(updateTableJoinState(id, join)),
           ]
         )
-        // return [
-        //   dispatch(joinTable(join)),
-        //   dispatch(updateTableJoinState(id, join))
-        // ]},
       }
     }
   )

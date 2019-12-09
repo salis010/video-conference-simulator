@@ -9,7 +9,7 @@ const app = express()
 const server = http.createServer(app)
 const io = socket.listen(server)
 
-const tables = createTables(15)
+const tables = createTables(6)
 
 app.use(express.static(__dirname))
 
