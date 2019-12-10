@@ -26,8 +26,6 @@ server.listen(port, () =>
 //Socketing
 io.on('connection', socket => {
 	console.log("A new user connected")
-  manageSocketing(socket, data) //is this require
-	//delete the 'connection' emit on the client, it is not required
-	//delete manage-socketing.js
+  manageSocketing(socket, data) 
 	mockActivity(socket, data)
 })

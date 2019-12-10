@@ -25,7 +25,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => (
   {
     socket: stateProps.socket,
     tables: stateProps.tables,
-    //onGetTables: () => dispatchProps.onGetTables(stateProps.socket),
     onUpdateTables: tables => dispatchProps.onUpdateTables(tables),
     onUpdateNotifications: notifications => dispatchProps.onUpdateNotifications(notifications)
   }

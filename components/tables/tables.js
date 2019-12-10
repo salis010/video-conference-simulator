@@ -71,7 +71,6 @@ export class Tables extends React.Component {
   }
 
   componentDidMount() {
-    //this.props.onGetTables() //is this required? if not delete from index.js and redux too
     this.props.socket.on('mocked-activity', data => {
       this.props.onUpdateTables(data.tables)
       this.props.onUpdateNotifications(data.notifications)

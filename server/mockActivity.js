@@ -28,7 +28,7 @@ const mockActivity = (socket, data) => {
 
       socket.emit('mocked-activity', newData)
     },
-    1000)
+    500)
 }
 
 module.exports = mockActivity

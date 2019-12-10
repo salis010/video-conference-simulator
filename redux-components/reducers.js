@@ -1,7 +1,5 @@
-//import { createTables } from './create-tables'
 import socketIOClient from 'socket.io-client'
-import { updateTableJoinStatus } from './update-table-join-status'
-import { UPDATE_TABLES, UPDATE_NOTIFICATIONS, JOIN_TABLE, UPDATE_TABLE_JOIN_STATUS } from './action-types'
+import { UPDATE_TABLES, UPDATE_NOTIFICATIONS, JOIN_TABLE } from './action-types'
 
 const socket = socketIOClient("localhost:3000")
 
@@ -23,10 +21,6 @@ export const rootReducer = (state = initialState, action) => {
 
       case JOIN_TABLE:
         return { ...state, joinedTable: action.payload }
-
-      case UPDATE_TABLE_JOIN_STATUS:
-        const tables = updateTableJoinStatus(state, action.payload)
-        return { ...state, tables: tables }
 
       default:
         return state
