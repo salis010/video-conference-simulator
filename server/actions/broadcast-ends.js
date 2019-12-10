@@ -1,18 +1,24 @@
 const getRandomInt = require('./get-random-int')
 
-const broadcastEnds = tables => {
-  const id = getRandomInt(tables.length)
+const broadcastEnds = data => {
 
-  if(tables[id].isBroadcasting === true && tables[id].participants.length >= 1) {
-    tables[id].isBroadcasting = false
+  const n = getRandomInt(4)
 
-    for(let i = 0; i < tables[id].participants.length; i++) {
-      tables[id].participants[i].hasWebcamIssue = false
-      tables[id].participants[i].hasConnectionIssue = false
+  if(n === 0) {
+    const id = getRandomInt(data.tables.length)
+
+    if(data.tables[id].isBroadcasting === true && data.tables[id].participants.length >= 1) {
+      data.tables[id].isBroadcasting = false
+      data.notifications.push(`Table ${id + 1} stopped broadcasting`)
+
+      for(let i = 0; i < data.tables[id].participants.length; i++) {
+        data.tables[id].participants[i].hasWebcamIssue = false
+        data.tables[id].participants[i].hasConnectionIssue = false
+      }
     }
   }
 
-  return tables
+  return data
 }
 
 module.exports = broadcastEnds

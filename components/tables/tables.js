@@ -8,6 +8,7 @@ const circleTableSize = 110
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 `
 
@@ -15,7 +16,7 @@ const Table = styled.div`
   position: relative;
   width: ${tableSize + 'px'};
   height: ${tableSize + 'px'};
-  margin: 40px;
+  margin: 20px;
   background-color: ${props => props.backgroundColor};
   border: ${props => props.joined ? "3px solid RGB(100, 100, 150)" : "none"};
   border-radius: 4px;
@@ -31,8 +32,9 @@ const TableTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: RGB(240, 240, 240);
-  background-color: RGB(100, 100, 150);
+  font-size: 1.2em;
+  font-weight: bold;
+  color: RGB(100, 100, 150);
   width: 75px;
   height: 30px;
   border-radius: 4px;
@@ -69,8 +71,11 @@ export class Tables extends React.Component {
   }
 
   componentDidMount() {
-    this.props.onGetTables()
-    this.props.socket.on('mocked-activity', data => this.props.onUpdateTables(data))
+    //this.props.onGetTables() //is this required? if not delete from index.js and redux too
+    this.props.socket.on('mocked-activity', data => {
+      this.props.onUpdateTables(data.tables)
+      this.props.onUpdateNotifications(data.notifications)
+    })
   }
 
   render() {

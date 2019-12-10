@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { updateTables, joinTable, updateTableJoinState } from '../../redux-components/actions'
+import { updateTables, joinTable } from '../../redux-components/actions'
 import { JoinButton as Component } from './join-button'
 
 const mapStateToProps = (state, props) =>
@@ -30,9 +30,8 @@ const mapDispatchToProps = dispatch =>
               }
             },
           (data) => [
-            dispatch(updateTables(data)),
+            dispatch(updateTables(data.tables)),
             dispatch(joinTable(join)),
-            //dispatch(updateTableJoinState(id, join)),
           ]
         )
       }

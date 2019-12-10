@@ -9,25 +9,26 @@ const userSolvedConnectionIssue = require('./actions/user-solved-connection-issu
 const userSolvedWebcamIssue = require('./actions/user-solved-webcam-issue')
 
 const actions = [
-  tables => userJoins(tables),
-  tables => userLeaves(tables),
-  tables => broadcastStarts(tables),
-  tables => broadcastEnds(tables),
-  tables => userHasConnectionIssue(tables),
-  tables => userHasWebcamIssue(tables),
-  tables => userSolvedConnectionIssue(tables),
-  tables => userSolvedWebcamIssue(tables),
+  data => userJoins(data),
+  data => userLeaves(data),
+  data => broadcastStarts(data),
+  data => broadcastEnds(data),
+  data => userHasConnectionIssue(data),
+  data => userHasWebcamIssue(data),
+  data => userSolvedConnectionIssue(data),
+  data => userSolvedWebcamIssue(data),
 ]
 
-const mockActivity = (socket, tables) => {
+const mockActivity = (socket, data) => {
   setInterval(() =>
     {
       const fn = actions[getRandomInt(actions.length)]
-      const newTables = fn(tables)
-      
-      socket.emit('mocked-activity', newTables)
+      const newData = fn(data)
+      newData.notifications = newData.notifications.slice(-3)
+
+      socket.emit('mocked-activity', newData)
     },
-    200)
+    1000)
 }
 
 module.exports = mockActivity

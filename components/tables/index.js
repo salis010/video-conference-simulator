@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { updateTables } from '../../redux-components/actions'
+import { updateTables, updateNotifications } from '../../redux-components/actions'
 import { Tables as Component } from './tables'
 
 const mapStateToProps = state => ({
@@ -13,10 +13,11 @@ const mapDispatchToProps = dispatch => (
       socket.emit(
         'get-tables',
         {'message': 'get-tables'},
-        (data) => dispatch(updateTables(data))
+        (data) => dispatch(updateTables(data.tables))
       )
     },
-    onUpdateTables: (data) => dispatch(updateTables(data))
+    onUpdateTables: tables => dispatch(updateTables(tables)),
+    onUpdateNotifications: notifications => dispatch(updateNotifications(notifications))
   }
 )
 
@@ -24,8 +25,9 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => (
   {
     socket: stateProps.socket,
     tables: stateProps.tables,
-    onGetTables: () => dispatchProps.onGetTables(stateProps.socket),
-    onUpdateTables: data => dispatchProps.onUpdateTables(data)
+    //onGetTables: () => dispatchProps.onGetTables(stateProps.socket),
+    onUpdateTables: tables => dispatchProps.onUpdateTables(tables),
+    onUpdateNotifications: notifications => dispatchProps.onUpdateNotifications(notifications)
   }
 )
 

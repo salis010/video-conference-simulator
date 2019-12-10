@@ -9,7 +9,11 @@ const app = express()
 const server = http.createServer(app)
 const io = socket.listen(server)
 
-const tables = createTables(6)
+//const tables = createTables(6)
+const data = {
+	tables: createTables(6),
+	notifications: [],
+}
 
 app.use(express.static(__dirname))
 
@@ -22,6 +26,8 @@ server.listen(port, () =>
 //Socketing
 io.on('connection', socket => {
 	console.log("A new user connected")
-  manageSocketing(socket, tables)
-	mockActivity(socket, tables)
+  manageSocketing(socket, data) //is this require
+	//delete the 'connection' emit on the client, it is not required
+	//delete manage-socketing.js
+	mockActivity(socket, data)
 })

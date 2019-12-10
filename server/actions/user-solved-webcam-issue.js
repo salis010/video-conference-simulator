@@ -1,18 +1,18 @@
 const getRandomInt = require('./get-random-int')
 
-const userSolvedWebcamIssue = tables => {
-  const id = getRandomInt(tables.length)
+const userSolvedWebcamIssue = data => {
+  const id = getRandomInt(data.tables.length)
 
-  if(tables[id].participants.length > 0) {
-    const participantId = getRandomInt(tables[id].participants.length)
+  if(data.tables[id].participants.length > 0) {
+    const participantId = getRandomInt(data.tables[id].participants.length)
 
-    if(tables[id].participants[participantId].hasWebcamIssue) {
-      tables[id].participants[participantId].hasWebcamIssue = false
-      return tables
+    if(data.tables[id].participants[participantId].hasWebcamIssue) {
+      data.tables[id].participants[participantId].hasWebcamIssue = false
+      return data
     }
   }
 
-  return tables
+  return data
 }
 
 module.exports = userSolvedWebcamIssue

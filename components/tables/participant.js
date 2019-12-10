@@ -15,7 +15,7 @@ const User = styled.div`
   height: ${size + 'px'};
   font-size: 16px;
   color: RGB(250, 250, 250);
-  background-color: RGB(150, 100, 100);
+  background-color: ${props => props.isMe ? "RGB(100, 100, 150)" : "RGB(150, 100, 100)"};
   border-radius: ${size + 'px'};
   z-index: 2;
 `
@@ -92,7 +92,13 @@ export const Participant = props => {
         left={leftAlerts}
         top={topAlerts}
       />
-      <User left={left} top={top}>{props.participant.name[0]}</User>
+      <User
+        isMe={props.participant.name === "Me"}
+        left={left}
+        top={top}
+      >
+        {props.participant.name[0]}
+      </User>
     </React.Fragment>
   )
 }
