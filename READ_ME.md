@@ -1,5 +1,7 @@
 # Video Conference Simulator
 
+![](remo.png) 
+
 ## How to start it
 
 In terminal type `npm run start` or `node server`
@@ -26,8 +28,6 @@ It has been assumed that each table can take a maximum of four participants.
 The frontend subscribes to socket events and responds to them by:
 - including the notification as text in the notifications window
 - visually represents what is going on. For example, if a user joins, he/she is seated at the respective table.
-
-Please watch the loom video for a demo.
 
 ## Technologies Used
 
